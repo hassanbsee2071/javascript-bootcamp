@@ -1,42 +1,50 @@
-let myAccount = {
+const myAccount = {
   Name: 'Syed Muhammad Hassan',
-  Income: 900,
-  Expense: 100
+  Expense: [],
+  Income: [],
+  addExpense: function (description, amount){
+    this.Expense.push({
+     description: description,
+     amount: amount
+     }) 
+  },
 
-}
+  addIncome: function (description, amount){
+   this.Income.push({
+    description: description,
+    amount: amount
+    }) 
+ },
+  getAccountSummary: function () {
+   let totalExpense = 0
+   let totalIncome = 0
+   let balance = 0
+      this.Expense.forEach(function (wholeElement,index){
+      totalExpense = totalExpense + wholeElement.amount
+   })
 
-let addExpense = function (account, expense){
+   this.Income.forEach(function (wholeElementOfArrayIncome,index){
+      totalIncome = totalIncome + wholeElementOfArrayIncome.amount
+   })
 
-account.Expense = account.Expense + expense
+   balance = totalIncome - totalExpense
 
-}
-
-let addIncome = function (account, income){
-
-    account.Income = account.Income + income
+   return `${this.Name} has $${totalIncome} in income and $${totalExpense} in expenses. So remaining balance in account is $${balance}`
  
- }
 
+  }
+}
+myAccount.addIncome ('pay', 50)
+myAccount.addIncome ('project-1', 10)
+myAccount.addIncome ('project-2', 10)
+myAccount.addIncome ('project-3', 30)
+myAccount.addIncome ('project-3', 30)
 
- let accountSummary = function (account){
-
-    let balance = account.Income - account.Expense
-
-    return `Your balance is ${balance}. Income is $${account.Income} and Expense is $${account.Expense}`
- }
-
- let accountReset = function (account){
-
-    account.Income = 0
-    account.Expense = 0
-
- }
-
- 
-console.log(accountSummary(myAccount))
-addIncome(myAccount, 100)
-console.log(accountSummary(myAccount))
-addExpense(myAccount, 50)
-console.log(accountSummary(myAccount))
-accountReset(myAccount)
-console.log(accountSummary(myAccount))
+myAccount.addExpense('coffee', 10)
+myAccount.addExpense('Tea', 10)
+myAccount.addExpense('Lunch', 25)
+myAccount.addExpense('Dinner', 25)
+myAccount.addExpense('Certifications', 25)
+myAccount.addExpense('Tuning', 5)
+myAccount.addExpense('HairCut', 5)
+console.log(myAccount.getAccountSummary())

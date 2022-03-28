@@ -21,11 +21,35 @@ const todos = [{
 }
 
 ] 
-
+//console.log("Hello Bro", todos[4])
 //const p = document.querySelector('h1')
 //console.log (p)
+let count = 0
+let index = 0
+let taskRemaining
+todos.forEach(function (todo) {
+   
+   if (todo.completed === true){
+      count = count + 1
+      console.log("Complete",todo.completed)
+   }
+   
+   index = index + 1
+})
+console.log("Count is:", count, "Index is:", index)
+const p = document.createElement('tasksRemaining')
+taskRemaining = index - count
+p.textContent = `You have ${taskRemaining} tasks remaining`
+document.querySelector('body').appendChild(p)
+document.write("<br>")
+console.log("Remaining Tasks:", taskRemaining)
+document.querySelector('body').appendChild(p)
+
 
 todos.forEach(function (todo,index) {
+   
+
+   
   const p = document.createElement('text')
   document.write("<br>")
   const ps = document.createElement('status')
@@ -42,6 +66,6 @@ todos.forEach(function (todo,index) {
 
   
 
-  //console.log(todo, index)
+  
 
 })

@@ -5,12 +5,12 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<STYLE type="text/css">
-		body { padding-left: 30px; width:100%; margin:auto; }
+		body { padding-left: 30px; }
 		option { text-align: left; }
 		.rq { display: inline-block; }
 		.rq-value { width: 20%; }
 		.rq-unit { width: 20%; }
-		.radio-inline { padding-right: 1em; display:block;overflow:hidden;}
+		.radio-inline { padding-right: 1em; }
 		.col { padding: 0; padding-bottom: 2em; }
 		.col-5 { padding: 0; padding-bottom: 2em; }
 		.inputErrorMessages { color: red; display: none; font-size: small}
@@ -24,63 +24,44 @@
 		#validationErrorMessage { display: none; }
 		#namespace { flex: none; width: 62% }
 		#teamContact, #submitterContact { flex: none; width: 48% }
-		.topright {
-          position: absolute;
-          top: 220px;
-          right: 650px;
-          font-size: 18px;
-        }
-		
-		.box {
-            top: 0;
-           bottom:0;
-           position:fixed;
-           overflow-y:scroll;
-           overflow-x:hidden;
-           overflow: auto;
-          white-space: nowrap;
-          
-        }
-	
-	
-		.brmedium {
-            display: block;
-            margin-bottom: 1em;
-        }
-		.brsmall {
-            display: block;
-            margin-bottom: -.0em;
-        }
-		.brxsmall {
-            display: block;
-            margin-bottom: -.4em;
-        }
-        
 		
 	 </STYLE>
   <title>Container Platform Onboarding</title>
 </head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <body>
 	<div id="image">
     	<img src="spg_bar_rgb_pos.png" class="ribbon"/>
 	</div>
 	<h2>MI Container Platform Resorce Quota Increase Form</h2>
-	<h6 style="color: gray;">Please reference <a target="_blank" href="https://confluence.marketintelligence.spglobal.com/x/fQYEAw">this</a> document, if you need more information regarding the following fields. <u>All</u> fields are manadatory.</h6>
-	<hr> 
+	<h6 style="color: gray;">Please reference <a target="_blank" href="https://confluence.marketintelligence.spglobal.com/x/fQYEAw">this</a> document when filling out the form for details regarding the following fields. <u>All</u> fields are manadatory.</h6>
+	<hr>
 	<div class="form" id="form-body">
-		<h6 id="successMessage">Thanks for submitting Resource Quota increase request form! Once your details are reviewed and approved by a member of the Platform Team, your namespace quota will be automatically increased and further communication will be sent to the email address you provided. If you have any questions, you can reach out to DockerSupport@spglobal.com</h6>
+		<h6 id="successMessage">Thanks for submitting your onboarding request! Once your details are reviewed and approved by a member of the Platform Team, your resources will be automatically provisioned and further communication will be sent to the email address you provided. If you have any questions, you can reach out to DockerSupport@spglobal.com</h6>
 		<div id="theForm">
 			<div class="container">
 				<div class="row">
 				  <div class="col-5">
-	
+					<div class="form-group">
+						<label for="applicationName">Application/Service Name</label>
+						<input class="form-control input" type="text" id="applicationName">
+						<span class="inputErrorMessages" id="applicationNameError">Required! Naming convention is <b>lowercase-words-seperated-by-dashes</b></span>
+					</div>
 					<div class="form-group">
 						<label for="teamName">Team Name</label><span data-toggle="tooltip" data-placement="right" title="If you have already onboarded a different app/service, please ensure to use the same team name as before"><img src="tooltip.png" width="14" height="14" style="margin-bottom: 9px;" ></span>
 						<input type="text" class="form-control input" id="teamName">
 						<span class="inputErrorMessages" id="teamNameError">Required! Naming convention is <b>lowercase-words-seperated-by-dashes</b></span>
 					</div>
-	
+					<div class="form-group">
+						<label for="organization">Organization</label>
+						<select class="form-control input" id="organization">
+							<option>Market Intelligence</option>
+							<option>SPG Platform</option>
+							<option>Dow Jones Indices</option>
+							<option>Platts</option>
+							<option>Corporate</option>
+						</select>
+					</div>
 					<div class="input-group">
 						<label for="teamContact">Team Contact Information</label><span data-toggle="tooltip" data-placement="right" title="If your team's email address uses a legacy email domain (snl.int, ciqdev.com, etc), please use the dropdown selector to select the correct domain. Submitting the form with the wrong domain will result in delays to your onboarding. If you are using a legacy domain that is not listed, please reach out to the Platform Team at DevOps_Platform_C@spglobal.com *before* submitting the form."><img src="tooltip.png" width="14" height="14" style="margin-bottom: 9px;" >
 					</div>
@@ -107,7 +88,13 @@
 						<span class="inputErrorMessages" id="submitterContactError">Required! Please provide a <b>valid email address</b></span>
 					</div>
 
-
+					<div class="form-group">
+						<label for="kubernetesSolution">Kubernetes Solution</label>
+						<select class="form-control input" id="kubernetesSolution" onchange="setKubernetesSolution()">
+							<option>EKS (cloud)</option>
+							<option>Docker EE (on-prem)</option>
+						</select>
+					</div>
 					<div class="form-group">
 						<label for="clusterName">Cluster</label>
 						<select class="form-control input" id="clusterName" onchange="setEnvsBasedOnClusterAndRegion()">
@@ -125,7 +112,26 @@
 							<option>us-west-2</option>
 						</select>
 					</div>
-
+					<div class="form-group">
+						<label>Environments</label></br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="devEnvCheckBox" value="dev" checked>
+							<label class="form-check-label" for="devEnvCheckBox">Dev</label>
+					  	</div>
+					  	<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="qaEnvCheckBox" value="qa" disabled>
+							<label class="form-check-label" for="qaEnvCheckBox">QA</label>
+					  	</div>
+					  	<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="stageEnvCheckBox" value="stage" checked>
+							<label class="form-check-label" for="stageEnvCheckBox">Stage</label>
+					  	</div>
+					  	<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="prodEnvCheckBox" value="prod" checked>
+							<label class="form-check-label" for="prodEnvCheckBox">Prod</label>
+						  </div>
+						  <span class="inputErrorMessages" id="environmentError">Required! Please select <b>at least 1 environment</b> based on your cluster/region choice</span>
+					</div>
 					<div class="input-group">
 						<label for="namespace">Namespace</label></br>
 					</div>
@@ -137,13 +143,22 @@
 						</div>
 						<span class="inputErrorMessages" id="namespaceError">Required! Naming convention is <b>lowercase-words-seperated-by-dashes</b>, and you do not need to include an '-ns'</span>
 					</div>
-
+					<div class="form-group">
+						<label for="releaseEngineeringFullAccess">Will Release Engineering Handle Your Deployments?</label>
+						<select class="form-control rq-value" id="releaseEngineeringFullAccess">
+							<option>yes</option>
+							<option>no</option>
+						</select>
+					</div>
 				  </div>
 				  <div class="col">
 					<div class="card" style="width: 27rem;">
 						<div class="card-body">
 							<h3>Resource Quota</h3>
 							<label class="radio-inline"><input type="radio" name="radio" onclick="setCustomRQ();"  checked>  Custom</label>
+							<label class="radio-inline"><input type="radio" name="radio" onclick="setSmallRQ();">  Small</label>
+							<label class="radio-inline"><input type="radio" name="radio" onclick="setMediumRQ();">  Medium</label>
+							<label class="radio-inline"><input type="radio" name="radio" onclick="setLargeRQ();">  Large</label>
 							<hr>
 							<div class="form-group">
 								<label for="requestCPU">Request CPU</label>
@@ -205,56 +220,6 @@
 			<span style="color: red;" id="validationErrorMessage">Please provide values for all inputs and ensure naming conventions are met!</span style="color: red;">
 		</div>
 	</div>
-
-
-
-   
-    <div class="scrollmenu">
-	    <strong>
-	      <h1  align="Center"><u>Information</u></h1>
-	    </strong>
-		<p style="font-weight :400; font-size :1rem"  align="justify">
-			
-
-			<strong class="brxsmall" style="color:rgb(0, 60, 255);"> <u>Limit & Request CPU:</u> </strong> <br>How much CPU will the total combined resources in your namespace require? This is measured in CPU cores, so you will input "1" for 1 core, "2" for 2 cores, and so on.<br>
-            <span class="brmedium"></span>
-			<strong style="color:rgb(109, 79, 109)">
-		  
-			request.cpu &nbsp; = &nbsp; (numPods * minCoresPerPod) <br>
-			limit.cpu &nbsp; &nbsp; &nbsp; &nbsp; = &nbsp; (numPods * maxCoresPerPod) <br>
-		   </strong>
-		   
-
-		   <br>
-		   <strong class="brxsmall" style="color:rgb(0, 60, 255);"> <u>Limit & Request Memory:</u> </strong> <br>How much memory, or RAM, will the total combined resources in your namespace require? This is measured in either Megabytes or Gigabytes. <br>
-		   <span class="brmedium"></span> 
-		   <strong style="color:rgb(109, 79, 109)">
-			request.memory &nbsp; = &nbsp; (numPods * minRAMPerPod) <br>
-			limit.memory &nbsp; &nbsp; &nbsp; &nbsp; = &nbsp;(numPods * maxRAMPerPod) <br>
-		</strong>
-		<br>
-
-		<strong class="brxsmall"  style="color:rgb(0, 60, 255);"> <u>Limit & Request Storage:</u> </strong> <br> How much local storage, if any, will the total combined resources in your namespace require? The input requirements are the exact same as those associated with Memory i.e. 10Gi for 10 Gigabytes, etc.<br>
-		<span class="brmedium"></span> 
-		  <strong style="color:rgb(109, 79, 109)" >
-			request.storage &nbsp;= &nbsp; (numPods * minLocalStoragePerPod) <br>
-			limit.storage &nbsp; &nbsp; &nbsp; = &nbsp; (numPods * maxLocalStoragePerPod) <br>
-	
-		  </strong>
-	    
-
-	   </p>
-	</div>
-
-    <script>
-        let box = document.querySelector('.box');
-        let width = box.offsetWidth;
-        let height = box.offsetHeight;
-        console.log({ width, height });
-		const domRect = box.getBoundingClientRect();
-        console.log(domRect);
-    </script>
-
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="script.js?version=57"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

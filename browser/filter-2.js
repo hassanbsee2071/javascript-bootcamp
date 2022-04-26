@@ -1,4 +1,24 @@
-let todos = []
+const todos = [{
+    text: 'Order cat food',
+    completed: true
+ 
+}, {
+   text: 'Clean kitchen',
+   completed: false
+
+}, {
+   text: 'Buy food',
+   completed: false
+
+}, {
+   text: 'Do work',
+   completed: false
+
+}, {
+   text: 'Exercise',
+   completed: true
+
+}]
 
 let value 
 
@@ -8,12 +28,6 @@ const filters = {
 
     searchText: ''
 }
-
-const todosjSON = localStorage.getItem('todos')
-if (todosjSON !== null) {
-   todos = JSON.parse(todosjSON)
-}
-
 let noteEL
 const renderNotes = function (todos, filters, value){
     const filteredNotes = todos.filter(function(todo) {
@@ -93,17 +107,4 @@ document.querySelector('#first-check-box').addEventListener('change', function (
    value = e.target.checked 
    console.log ("target checked is: ", e.target.checked )
    renderNotes(todos, filters, value)
-})
-
-
-document.querySelector('#new-todo').addEventListener('submit', function(e){
-
-  e.preventDefault()
-  todos.push({
-    text: e.target.elements.text.value,
-    completed: false
-  })
-  localStorage.setItem('todos', JSON.stringify(todos))
-  renderNotes(todos,filters)
-
 })

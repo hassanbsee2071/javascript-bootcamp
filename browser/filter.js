@@ -8,7 +8,17 @@ const filters = {
     searchText: ''
 }
 
+//document.querySelector('#first-check-box').addEventListener('DOMContentLoaded', function (e){
+      
+ //   e.target.checked = false
 
+    
+ //})
+
+
+
+uncheckBoxes()
+printTodos(todos)
 renderNotes(todos, filters)
 filtering()
 checkbox()

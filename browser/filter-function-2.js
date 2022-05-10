@@ -17,38 +17,17 @@ const savedTodos = function (todos){
 
 let noteEL
 let filteredNotes
-let count=0
+let count = 0
 let taskRemaining
 let crossbox
 let todoText
 let removeButton
-let boxCount=0
-let trueCount=0
-let mix
 
+noteEL = document.createElement('div')
+crossbox = document.createElement('input')
+todoText =  document.createElement('span')
+removeButton = document.createElement('button')
 
-const uncheckBoxes = function (todos){
-
-    document.getElementById("first-check-box").checked = false;
-
-}
-
-
-const printTodos = function (todos){
-
-    todos.forEach( function(todo){
-        console.log ("Hello my todo is:", todo)
-        console.log ("My Status is:",todo.completed)
-        if (todo.completed === true) {
-            trueCount = trueCount + 1
-        }
-
-    
-        
-    })
-
-
-}
 const renderNotes = function (todos, filters, value){
         filteredNotes = todos.filter(
           function(todo){
@@ -60,80 +39,60 @@ const renderNotes = function (todos, filters, value){
          document.querySelector('#my-todos').innerHTML = ''
 
          console.log("Filtered Notes are:", filteredNotes)
-         generateTodoDOMDisplay(filteredNotes) 
+         generateTodoDOM(filteredNotes) 
          taskSummary()
 
 }
 
-const generateTodoDOMDisplay = function (filteredNotes) {
-
-    filteredNotes.forEach( function(todo){
-        console.log ("My new todo is:", todo)
-        document.querySelector('#my-todos').appendChild(generateTodoDOM(todo))
-    
-        
-    })
+const generateTodoDOM = function (filteredNotes){
 
 
-
-}
-const generateTodoDOM = function (todo){
-   
-            noteEL = document.createElement('div')
-            crossbox = document.createElement('input')
-            todoText =  document.createElement('span')
-            removeButton = document.createElement('button')
-            
+    filteredNotes.forEach(
+             
+        function(todo){
         console.log("Todo inside for each is:", todo)
-        if (todo.completed === true ){
-              console.log("I goes into if where count is present")
-              count = count + 1
+        if (todo.completed === true){
+            count = count + 1
  
          }
         
         if (value == null) {
      
                console.log ("I am undefined")
+               crossbox = document.createElement('input')
                crossbox.setAttribute('type', 'checkbox')
-               noteEL.appendChild(crossbox)
-               todoText.textContent = todo.text
-               noteEL.appendChild(todoText)
-               //return noteEL
-
+               document.querySelector('#my-todos').appendChild(crossbox)
+               noteEL = document.createElement('div')
+               
+               noteEL.textContent = todo.text
+               document.querySelector('#my-todos').appendChild(noteEL)
         }else if (value == false) {
            console.log ("Value is false")
-           crossbox.setAttribute('type', 'checkbox')
-           noteEL.appendChild(crossbox)
-           console.log ("Todo Text in false value", todo.text)
-           todoText.textContent = todo.text
-           noteEL.appendChild(todoText)
-           //return noteEL
-            
-
-
+           noteEL = document.createElement('p')
+           noteEL.textContent = todo.text
+           document.querySelector('#my-todos').appendChild(noteEL)                  
 
         }else if (value == true && todo.completed === false) {
-           console.log ("Value is true and todo.completed is false")
-           crossbox.setAttribute('type', 'checkbox')
-           noteEL.appendChild(crossbox)
-           
-           todoText.textContent = todo.text
-           noteEL.appendChild(todoText)
-           //return noteEL
 
+           console.log ("Value is true and todo.completed is false")
+           noteEL = document.createElement('p')
+           noteEL.textContent = todo.text
+           document.querySelector('#my-todos').appendChild(noteEL)   
         }
 
 
-     //count = count - falseCount
-     console.log("Count is:", count)
-     console.log("True Count is:", trueCount)
-     console.log("Length of array is:", todos.length)
-     return noteEL
-                           
-    
- 
 
-  
+
+
+
+     //index = index + 1
+     console.log("Count is:", count)
+     //console.log("Index is:", index)
+     console.log("Length of array is:", todos.length)
+                           }
+    )
+
+
 
 }
 
@@ -142,7 +101,7 @@ const taskSummary = function () {
         
         document.querySelector('#tasks-remaining').innerHTML = ''
         const mytasks = document.createElement('h1')
-        taskRemaining = todos.length - trueCount
+        taskRemaining = todos.length - count
         mytasks.textContent = `You have ${taskRemaining} tasks remaining`
         document.querySelector('#tasks-remaining').appendChild(mytasks)
         
@@ -185,14 +144,10 @@ const checkbox = function (){
 
 
     document.querySelector('#first-check-box').addEventListener('change', function (e){
-      
+   
         value = e.target.checked 
-        console.log ("Event is e", e)
         console.log ("target checked is: ", e.target.checked )
-        boxCount = boxCount + 1
-        console.log ("Box Count is:", boxCount)
-        renderNotes(todos, filters, value, boxCount)
-        
+        renderNotes(todos, filters, value)
      })
 
 

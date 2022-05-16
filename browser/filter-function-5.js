@@ -27,7 +27,6 @@ let removeButton
 let boxCount=0
 let trueCount=0
 let mix
-let parsing 
 
 
 const uncheckBoxes = function (todos){
@@ -38,14 +37,8 @@ const uncheckBoxes = function (todos){
 
 
 const printTodos = function (todos){
-    const todosjSON = localStorage.getItem('todos')
-    console.log ("todosjson are:", todosjSON)
-    parsing = JSON.parse(todosjSON)
-    console.log ("parsingjson are:", parsing)
-    
-    
-    parsing.forEach( function(todo){
-        console.log ("parsingJson Completed are:", todo.completed)
+
+    todos.forEach( function(todo){
         console.log ("Hello my todo is:", todo)
         console.log ("My Status is:",todo.completed)
         if (todo.completed === true) {
@@ -56,14 +49,7 @@ const printTodos = function (todos){
         
     })
 
-    document.querySelector('#tasks-remaining').innerHTML = ''
-    const mytasks = document.createElement('h1')
-    taskRemaining = todos.length - trueCount
-    //taskRemaining = Math.abs(taskRemaining)
-    mytasks.textContent = `You have ${taskRemaining} tasks remaining`
-    document.querySelector('#tasks-remaining').appendChild(mytasks)
-    console.log("True Count is:", trueCount)
-     console.log("Length of array is:", todos.length)
+
 }
 const renderNotes = function (todos, filters, value){
         filteredNotes = todos.filter(
@@ -77,8 +63,7 @@ const renderNotes = function (todos, filters, value){
 
          console.log("Filtered Notes are:", filteredNotes)
          generateTodoDOMDisplay(filteredNotes) 
-
-        
+         taskSummary()
 
 }
 
@@ -118,7 +103,6 @@ const generateTodoDOM = function (todo){
                    toggleTodo(todo.id)
                    savedTodos(todos)
                    renderNotes(todos, filters)
-                   newSummary(todo.id)
                    
                })
                todoText.textContent = todo.text
@@ -126,10 +110,10 @@ const generateTodoDOM = function (todo){
                removeButton.textContent = 'x'
                noteEL.appendChild(removeButton)
                removeButton.addEventListener('click', function(){
-                   removeNote(todo.id)    
+                   removeNote(todo.id)
+                   taskSummary()
                    savedTodos(todos)
                    renderNotes(todos, filters)
-                   newSummary(todo.id)
                })
                //return noteEL
 
@@ -140,9 +124,9 @@ const generateTodoDOM = function (todo){
            noteEL.appendChild(crossbox)
            crossbox.addEventListener('change', function (){
                toggleTodo(todo.id)
+               taskSummary()
                savedTodos(todos)
                renderNotes(todos, filters)
-               newSummary(todo.id)
            })
            todoText.textContent = todo.text
            noteEL.appendChild(todoText)
@@ -150,9 +134,9 @@ const generateTodoDOM = function (todo){
            noteEL.appendChild(removeButton)
            removeButton.addEventListener('click', function(){
                removeNote(todo.id)
+               taskSummary()
                savedTodos(todos)
                renderNotes(todos, filters)
-               newSummary(todo.id)
            })
            //return noteEL
 
@@ -163,9 +147,9 @@ const generateTodoDOM = function (todo){
            noteEL.appendChild(crossbox)
            crossbox.addEventListener('change', function (){
                toggleTodo(todo.id)
+               taskSummary()
                savedTodos(todos)
                renderNotes(todos, filters)
-               newSummary(todo.id)
            })
            todoText.textContent = todo.text
            noteEL.appendChild(todoText)
@@ -173,9 +157,9 @@ const generateTodoDOM = function (todo){
            noteEL.appendChild(removeButton)
            removeButton.addEventListener('click', function(){
                removeNote(todo.id)
+               taskSummary()
                savedTodos(todos)
                renderNotes(todos, filters)
-               newSummary(todo.id)
            })
            //return noteEL
 
@@ -185,7 +169,8 @@ const generateTodoDOM = function (todo){
 
      //count = count - falseCount
      console.log("Count is:", count)
- 
+     console.log("True Count is:", trueCount)
+     console.log("Length of array is:", todos.length)
      return noteEL
                            
     
@@ -216,69 +201,22 @@ const toggleTodo = function (id){
       if (todo !== undefined){
          todo.completed = !todo.completed
       }
-      
+      taskSummary()
 }
 
+const taskSummary = function () {
 
-
-
-
-const newSummary = function (id){
-let newCount = 0
-let newParse 
-const todos_jSON = localStorage.getItem('todos')
-    newParse = JSON.parse(todos_jSON)
-    console.log ("New Summary ID is:", id)
-    console.log ("New Summary My name is Hasssan")
-
-    if (newParse.length === 0) {
-        console.log ("New Summary My I am null")
+        
         document.querySelector('#tasks-remaining').innerHTML = ''
         const mytasks = document.createElement('h1')
-        taskRemaining = 0
-        mytasks.textContent = `You have ${taskRemaining} tasks remaining`
-        document.querySelector('#tasks-remaining').appendChild(mytasks)
-
-     }
-
-    const toda = todos.find(function (todo){
-        console.log ("New Summary Todo and ID is:", todo, id)
-        
-        console.log ("New Summary Todo completed:", todo.completed)
-        
-        if ( todo.completed === true ){
-            console.log ("New Summary if block")
-            newCount = newCount + 1
-
-        } else {
-            console.log ("New Summary Else Block")
-        }
-
-
-
-        const todos_jSON = localStorage.getItem('todos')
-        newParse = JSON.parse(todos_jSON)
-       
-        //let newjSON = localStorage.getItem('todos')
-        console.log ("New Summary parse length is", newParse.length)
-
-        document.querySelector('#tasks-remaining').innerHTML = ''
-        const mytasks = document.createElement('h1')
-        taskRemaining = newParse.length - newCount
-        //taskRemaining = todos.length - newCount
+        taskRemaining = todos.length - trueCount
         //taskRemaining = Math.abs(taskRemaining)
         mytasks.textContent = `You have ${taskRemaining} tasks remaining`
         document.querySelector('#tasks-remaining').appendChild(mytasks)
-        console.log("New Summary Count is:", newCount)
-        console.log("New Summary Length of array in is:", todos.length)
+        
 
-        //return toda.id === id
-    })
-    
 
 }
-
-
 
 
 const newTodo = function (){
@@ -294,7 +232,6 @@ const newTodo = function (){
         })
         savedTodos(todos)
         renderNotes(todos,filters)
-        newSummary(todos.id)
       
       })
 

@@ -16,7 +16,7 @@ const filters = {
  //})
 
 
-
+initializeTodos()
 uncheckBoxes()
 printTodos(todos)
 renderNotes(todos, filters)

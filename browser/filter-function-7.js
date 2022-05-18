@@ -98,7 +98,7 @@ const generateTodoDOM = function (todo){
    
             noteEL = document.createElement('div')
             crossbox = document.createElement('input')
-            todoText =  document.createElement('a')
+            todoText =  document.createElement('span')
             removeButton = document.createElement('button')
             
         console.log("Todo inside for each is:", todo)
@@ -122,7 +122,6 @@ const generateTodoDOM = function (todo){
                    
                })
                todoText.textContent = todo.text
-               todoText.setAttribute('href',`/edit.html#${todo.id}`)
                noteEL.appendChild(todoText)
                removeButton.textContent = 'x'
                noteEL.appendChild(removeButton)
@@ -146,7 +145,6 @@ const generateTodoDOM = function (todo){
                newSummary(todo.id)
            })
            todoText.textContent = todo.text
-           todoText.setAttribute('href',`/edit.html#${todo.id}`)
            noteEL.appendChild(todoText)
            removeButton.textContent = 'x'
            noteEL.appendChild(removeButton)
@@ -170,7 +168,6 @@ const generateTodoDOM = function (todo){
                newSummary(todo.id)
            })
            todoText.textContent = todo.text
-           todoText.setAttribute('href',`/edit.html#${todo.id}`)
            noteEL.appendChild(todoText)
            removeButton.textContent = 'x'
            noteEL.appendChild(removeButton)
@@ -209,8 +206,6 @@ const removeNote = function (id){
     }
 
 }
-
-
 
 const toggleTodo = function (id){
      
@@ -292,15 +287,12 @@ const newTodo = function (){
     document.querySelector('#new-todo').addEventListener('submit', function(e){
 
         e.preventDefault()
-        const idd = uuidv4()
         todos.push({
-          id: idd,
+          id: uuidv4(),
           text: e.target.elements.text.value,
           completed: false
         })
         savedTodos(todos)
-        console.log("My UUID is:", idd)
-        //location.assign(`/edit.html#${idd}`)
         renderNotes(todos,filters)
         newSummary(todos.id)
       
@@ -335,19 +327,5 @@ const checkbox = function (){
         
      })
 
-
-}
-
-
-
-const initializeTodos = function (todos){
-
-    const myjSON = localStorage.getItem('todos')
-    if (myjSON === null) {
-        console.log ("Initialize Storage")
-        localStorage.setItem('todos', '[]')
-     }
-
-    
 
 }

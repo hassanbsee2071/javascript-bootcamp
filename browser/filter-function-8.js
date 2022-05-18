@@ -300,8 +300,8 @@ const newTodo = function (){
         })
         savedTodos(todos)
         console.log("My UUID is:", idd)
-        //location.assign(`/edit.html#${idd}`)
-        renderNotes(todos,filters)
+        location.assign(`/edit.html#${idd}`)
+        //renderNotes(todos,filters)
         newSummary(todos.id)
       
       })
@@ -342,12 +342,6 @@ const checkbox = function (){
 
 const initializeTodos = function (todos){
 
-    const myjSON = localStorage.getItem('todos')
-    if (myjSON === null) {
-        console.log ("Initialize Storage")
-        localStorage.setItem('todos', '[]')
-     }
-
-    
+    localStorage.setItem('todos', '[]')
 
 }

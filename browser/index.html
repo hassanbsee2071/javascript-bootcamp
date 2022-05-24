@@ -13,6 +13,13 @@
 
         <p>Enter Todos in Below Box To Search</p>
         <input id="search-text" type="text" placeholder="Filter Todos">
+        <select id="filter-by">
+           <option value="byEdited">Sort by Last Edited</option>
+           <option value="byCreated">Sort by Recently Created</option>
+           <option value="alphabetical">Sort alphabetically</option>
+
+
+        </select>
 
         <label> 
             <input id="first-check-box" type="checkbox" > Check this box to hide completed todos 
@@ -36,9 +43,10 @@
         </div>
 
 
-
+        <script src="moment.js"></script>
         <script src="uuid.js"></script>
         <script src="filter-function.js"></script>
+        
         <script src="filter.js"></script>
 
     </body>

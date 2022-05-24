@@ -65,78 +65,7 @@ const printTodos = function (todos){
     console.log("True Count is:", trueCount)
      console.log("Length of array is:", todos.length)
 }
-
-
-
-
-
-const sortNotes = function (todos, sortBy){
-    if (sortBy === 'byEdited') {
-        console.log ("Sorting is called in a")
-      return todos.sort(function (a,b){
-          if (a.updatedAt > b.updatedAt) {
-            console.log ("Sorting is called in b")
-              return -1
-          }else if (a.updatedAt < b.updatedAt) {
-            console.log ("Sorting is called in c")
-              return 1
-          }else {
-            console.log ("Sorting is called in d")
-              return 0
-          }
-      })
-
-
-    }else if (sortBy === 'byCreated') {
-
-        console.log ("Sorting is called in byCreated")
-        return todos.sort(function (a,b){
-            if (a.createdAt > b.createdAt) {
-              console.log ("Sorting is called in b")
-                return -1
-            }else if (a.createdAt < b.createdAt) {
-              console.log ("Sorting is called in c")
-                return 1
-            }else {
-              console.log ("Sorting is called in d")
-                return 0
-            }
-        })
-  
-    }else if (sortBy === 'alphabetical') {
-
-        console.log ("Sorting is called in alphabetical")
-        return todos.sort(function (a,b){
-            if (a.text.toLowerCase() < b.text.toLowerCase()) {
-              console.log ("Sorting is called in b")
-                return -1
-            }else if (a.text.toLowerCase() > b.text.toLowerCase()) {
-              console.log ("Sorting is called in c")
-                return 1
-            }else {
-              console.log ("Sorting is called in d")
-                return 0
-            }
-        })
-  
-    }else {
-        return todos
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
 const renderNotes = function (todos, filters, value){
-        todos = sortNotes(todos, filters.sortBy)
-        console.log ("Sorting is called after todos", todos)
         filteredNotes = todos.filter(
           function(todo){
           return todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
@@ -396,20 +325,6 @@ const filtering = function (){
 
      
 }
-
-
-
-
-document.querySelector('#filter-by').addEventListener('change', function (e){
-    console.log ("Sorting is called")
-    filters.sortBy = e.target.value
-    console.log ("Sorting is called in e target value is:", e.target.value)
-    renderNotes(todos, filters)
- })
-
-
-
-
 
 const checkbox = function (){
 

@@ -5,8 +5,7 @@ let value
 //console.log(todos[0].text)
 const filters = {
 
-    searchText: '',
-    sortBy: 'alphabetical'
+    searchText: ''
 }
 
 //document.querySelector('#first-check-box').addEventListener('DOMContentLoaded', function (e){
